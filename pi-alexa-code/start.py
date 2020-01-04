@@ -121,7 +121,7 @@ if __name__ == "__main__":
     try:
         awsclient = awsIoTClient(config)
         awsclient.suscribe(['drone/takeoff','drone/land','drone/direction','drone/rotate','drone/flip'],message_callback)
-        #drone = connect_drone()
+        drone = connect_drone()
     except KeyboardInterrupt:
         logging.warning('KeyboardInterrupt...')
     except Exception as e:
