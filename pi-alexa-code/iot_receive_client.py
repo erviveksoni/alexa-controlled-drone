@@ -27,7 +27,6 @@ class awsIoTClient():
             self.certfolder+ "/" + config['certificateName'])
 
         # AWSIoTMQTTClient connection configuration
-        # AWSIoTMQTTClient connection configuration
         self.myAWSIoTMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
         self.myAWSIoTMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
         self.myAWSIoTMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
