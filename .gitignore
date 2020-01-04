@@ -140,3 +140,4 @@ dmypy.json
 
 # AWSIoTSDK
 lambda_function/AWSIoTPythonSDK/
+*.dist-info/
