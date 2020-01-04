@@ -129,9 +129,9 @@ dmypy.json
 .pyre/
 
 # Certificates
-.pem
-.key
-.crt
+*.pem
+*.key
+*.crt
 
 #AWSIoTSDK
 lambda_function/AWSIoTPythonSDK/
