@@ -115,7 +115,7 @@ def message_callback(client, userdata, message):
     except Exception as e:
         logging.error("Error occurred " + str(e))
 
-
+# Executing the command for 1 second
 def execute_command(command_callback, stop_callback):
     t_end = time.time()
     while (time.time() - t_end) < 1:
