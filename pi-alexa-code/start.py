@@ -19,14 +19,15 @@ log_data = None
 # Configurations
 ##############################
 
-config = { 
-         'host': 'a1g1yvj52z2sc3-ats.iot.us-east-2.amazonaws.com',
-         'rootCAName': 'root-CA.crt',
-         'certificateName': 'drone1.cert.pem',
-         'privateKeyName' : 'drone1.private.key',
-         'clientId': 'drone_alexa_sender',
-         'port' : 8883
+config = {
+    'host': 'a1g1yvj52z2sc3-ats.iot.us-east-2.amazonaws.com',
+    'rootCAName': 'root-CA.crt',
+    'certificateName': 'drone1.cert.pem',
+    'privateKeyName': 'drone1.private.key',
+    'clientId': 'drone_alexa_sender',
+    'port': 8883
 }
+
 
 ##############################
 # Drone connection
@@ -65,6 +66,7 @@ def drone_event_handler(event, sender, data, **args):
         # print(self.log_data)
     else:
         logging.info('event="%s" data=%s' % (event.getname(), str(data)))
+
 
 ##############################
 # Callback
@@ -121,7 +123,8 @@ if __name__ == "__main__":
     try:
         awsclient = awsIoTClient(config)
         drone = connect_drone()
-        awsclient.suscribe(['drone/takeoff','drone/land','drone/direction','drone/rotate','drone/flip'],message_callback)
+        awsclient.suscribe(['drone/takeoff', 'drone/land', 'drone/direction', 'drone/rotate', 'drone/flip'],
+                           message_callback)
     except KeyboardInterrupt:
         logging.warning('KeyboardInterrupt...')
     except Exception as e:
