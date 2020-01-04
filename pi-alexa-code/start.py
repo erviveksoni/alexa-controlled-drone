@@ -1,6 +1,6 @@
 import json
 import logging
-import os
+import time
 
 import tellopy
 
@@ -10,6 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 awsclient = None
 
+speed = 100
 drone = None
 prev_flight_data = None
 flight_data = None
@@ -79,32 +80,33 @@ def message_callback(client, userdata, message):
         logging.info("Topic: " + message.topic + "\nMessage: " + rawdata)
         jsondata = json.loads(rawdata)
         data = jsondata["value"]
+        
         if topic == "drone/takeoff":
             drone.takeoff()
         elif topic == "drone/land":
             drone.land()
         elif topic == "drone/direction":
             if data == "right":
-                drone.right(10)
+                execute_command(lambda: drone.right(speed), lambda: drone.right(0))
             elif data == "left":
-                drone.left(10)
+                execute_command(lambda: drone.left(speed), lambda: drone.left(0))
             elif data == "forward":
-                drone.forward(10)
+                execute_command(lambda: drone.forward(speed), lambda: drone.forward(0))
             elif data == "back":
-                drone.backward(10)
+                execute_command(lambda: drone.backward(speed), lambda: drone.backward(0))
             elif data == "up":
-                drone.up(10)
+                execute_command(lambda: drone.up(speed), lambda: drone.up(0))
             elif data == "down":
-                drone.down(10)
+                execute_command(lambda: drone.down(speed), lambda: drone.down(0))
             else:
                 pass
         elif topic == "drone/flip":
             drone.flip_forward()
         elif topic == "drone/rotate":
             if data == "left":
-                drone.counter_clockwise(10)
+                execute_command(lambda: drone.counter_clockwise(speed), lambda: drone.counter_clockwise(0))
             elif data == "right":
-                drone.clockwise(10)
+                execute_command(lambda: drone.clockwise(speed), lambda: drone.clockwise(0))
             else:
                 pass
         else:
@@ -113,6 +115,16 @@ def message_callback(client, userdata, message):
     except Exception as e:
         logging.error("Error occurred " + str(e))
 
+
+def execute_command(command_callback, stop_callback):
+    t_end = time.time()
+    while (time.time() - t_end) < 1:
+        #print(time.time() - t_end)
+        command_callback()
+        time.sleep(300e-3) #300ms
+    
+    if stop_callback is not None:
+        stop_callback()
 
 ##############################
 # Entry point
