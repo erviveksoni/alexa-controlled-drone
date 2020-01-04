@@ -127,6 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+<<<<<<< HEAD
 
 # Certificates
 *.pem
@@ -136,3 +137,15 @@ dmypy.json
 #AWSIoTSDK
 lambda_function/AWSIoTPythonSDK/
 
+||||||| bcf7f45... Adding lambda function code
+
+# Certificates
+.pem
+.key
+.crt
+
+#AWSIoTSDK
+lambda_function/AWSIoTPythonSDK/
+
+=======
+>>>>>>> parent of bcf7f45... Adding lambda function code
