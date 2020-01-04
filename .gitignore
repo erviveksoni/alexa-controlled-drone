@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Certificates
+.pem
+.key
+.crt
+
+#AWSIoTSDK
+lambda_function/AWSIoTPythonSDK/
+
