@@ -1,0 +1,39 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish",
+        "iot:Receive"
+      ],
+      "Resource": [
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/takeoff",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/land",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/direction",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/rotate",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe"
+      ],
+      "Resource": [
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/takeoff",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/land",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/direction",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/rotate",
+        "arn:aws:iot:us-east-2:087006985831:topic/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
