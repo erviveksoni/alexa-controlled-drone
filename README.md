@@ -33,10 +33,71 @@ This project will also enable you to implement other ideas on similar lines or c
 - AWS Account. You can create one for free [here](https://aws.amazon.com/free/)
 - Amazon Alexa Developer account. You can create one for free [here](https://developer.amazon.com)
 - Amazon Alexa Device or Alexa App (get it from app store or google play) installed on your phone.
-> __Note__: Ensure you sign in into the Alexa app from the same email address you used for creating Amazon Alexa Developer account.
+> __Note__: Ensure you sign in into the Alexa app from the same email address you used for creating Amazon Alexa Developer account. If you are using Alexa device, then the device should be configured with the same email address.
 
 ## Hardware
 
 You can follow the steps mentioned in the [hardware](https://github.com/erviveksoni/raspberrypi-controlled-tello#hardware) section of my previous project to also prepare for the upcoming projects. 
 
 Alternatively, to keep it very simple here just connect the Micro USB to USB Type A female adapter + Wifi dongle to the Raspberry Pi (Zero).
+
+
+## Software
+
+### Setting up Raspberry Pi Operating System
+We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 
+
+At this point in time, we should be able to SSH into out Pi using the Wifi onboard. Also the Pi will be most likey have access to the internet (dependeing on your WIFI network settings).
+
+### Connecting Raspberry Pi to Tello
+
+When you turn on Tello, it configures itself as an AP allowing the clients to connect and control to it. Once a client is connected to Tello, it looses internet connectivity. 
+To avoid this we'll configure the Raspberry Pi with dual WIFI interfaces. 
+
+The Raspberry Pi onboard WIFI connects to the internet (via my home network) and the WIFI Adapter connects to Tello's WIFI.
+
+Here are the steps:
+- Ensure the WIFI dongle is connected to the Raspberry Pi Zero micro usb port
+- Power on Raspberry Pi
+- SSH into Raspberry Pi Zero
+- Type `lsusb`. Ensure you see the WIFI USB adapter listed on the console output
+- Type `sudo nano /etc/network/interfaces` to edit the network interfaces file
+- Add the text below towards the end of the file. 
+Replace the `TELLO_NETWORK_NAME` with the WIFI AP name of Tello followed by its password.
+
+```c
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet manual
+wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+
+allow-hotplug wlan1
+iface wlan1 inet dhcp
+wpa-ssid "<TELLO_NETWORK_NAME>"
+wpa-psk "<PASSWORD>"
+
+iface default inet dhcp
+```
+- Save your changes to the interfaces file
+- Shutdown Raspberry Pi `sudo shutdown now`
+- Turn on Tello
+- Power on Raspberry Pi and SSH into it
+- Type `ifconfig` to list the Raspberry Pi network interfaces
+- You should see 2 interfaces `wlan0` and `wlan1` connected to their network respectively
+- __In case you don't see an IP address acquired for `wlan1`__, then reset the `wlan1` interface using the command
+ `sudo dhclient -v wlan1`
+
+### Installing Required Packages
+SSH into Raspberry Pi and follow the steps below.
+#### Installing Python
+
+- `sudo apt-get install python3-dev`
+- `sudo apt install python3-pip`
+
+#### Installing Other Packages
+- `pip3 install tellopy`
+- `pip3 install AWSIoTPythonSDK`
