@@ -33,4 +33,10 @@ This project will also enable you to implement other ideas on similar lines or c
 - AWS Account. You can create one for free [here](https://aws.amazon.com/free/)
 - Amazon Alexa Developer account. You can create one for free [here](https://developer.amazon.com)
 - Amazon Alexa Device or Alexa App (get it from app store or google play) installed on your phone.
-> __Note__: Ensure you sign iinto the Alexa app from the same email address you used for creating Amazon Alexa Developer account.
+> __Note__: Ensure you sign in into the Alexa app from the same email address you used for creating Amazon Alexa Developer account.
+
+## Hardware
+
+You can follow the steps mentioned in the [hardware](https://github.com/erviveksoni/raspberrypi-controlled-tello#hardware) section of my previous project to also prepare for the upcoming projects. 
+
+Alternatively, to keep it very simple here just connect the Micro USB to USB Type A female adapter + Wifi dongle to the Raspberry Pi (Zero).
