@@ -44,6 +44,78 @@ Alternatively, to keep it very simple here just connect the Micro USB to USB Typ
 
 ## Software
 
+- Let's start by download this Repository on your development machine  
+  `git clone https://github.com/erviveksoni/alexa-controlled-drone`
+- `cd` into the `alexa-controlled-drone` directory
+- Create a new folder `certs` 
+
+### Provision AWS IoT Device
+
+Let's start by setting up a device in AWS IoT to enable us communication with Raspberry Pi.
+
+#### Creating Policy
+- [Sign in](https://console.aws.amazon.com/console/home) into the AWS Console
+- In the find service section, search for the service `IoT Core`
+- On the left hand navigation, click to expand `Secure` and then select `Policies`
+- Click `Create` in the top right corner of the screen
+- In the create policy screen, click `Advanced mode`
+- Provide a policy name e.g. AlexaPolicy
+- Copy the contents of the `aws-iot-policy.txt` file from the cloned repository code 
+- Paste the policy text into the text box and click `Create`
+
+#### Creating a Thing
+- On the left hand navigation, click to expand `Manage` and then select `Thing`
+- Click `Create` in the top right corner of the screen
+- Click `Create a single thing` button in the next screen
+- Provide a name for the things e.g.Tello
+- Click `Next`
+- Click `Create certificate` in front of One-click certificate creation (recommended)
+- Download all the 3 certificate files for your thing (public, private and certificate) and save them into `certs` folder
+- Download the root CA certificate for AWS IoT from [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) and save it into `certs` folder
+- Click `Attach a policy` button and select the policy `AlexaPolicy` you created in the above section
+- Click `Register thing` to finish Thing creation
+- Once the Thing is created, open the thing details and click `Interact` in the left hand navigation
+- Make a note of the value of `REST API Endpoint` under the HTTPS section for later use. 
+e.g. `xxxxxxxxxxxxxx-ats.iot.us-east-2.amazonaws.com`
+We will use this endpoint to interact with the Thing later in the process. 
+
+At this point, we have all the stuff ready to communicate with the Thing.
+
+### Creating AWS Lambda Function
+
+Next step is to create an AWS Lambda function which will be invoked by the Alexa skill. 
+The message passed by the Alexa invocation to the Lambda function will be validated against a list of allowed actions and further sent to the Thing we created in the above step.
+
+Every message passed to the Lambda function represents a type of action the user wants to execute. Further every action has a designated MQTT topic defined in the policy attached to the Thing.
+
+#### Creating Lambda Function and Add Alexa Skill Trigger
+- In the AWS developer console, search for `lambda`
+- Click `Lambda` in the results to navigate to the Lambda console
+- Click `Create function` in the top right corner of the screen
+- Put the function name as `Alexafunction`
+- Runs time as `Python 3.7`
+- Click `Create function`
+- In the `Designer` section, click `Add trigger`
+- In the Trigger configuration page, select `Alexa Skill Kit`
+- Select `disable` option for the Skill ID verification
+- Click `Add` to complete adding an alexa trigger
+
+
+#### Creating Lambda Function and Add Alexa Skill Trigger
+- Copy the `certs` folder in the root of the `alexa-controlled-drone` directory to the `lambda_function` subdirectory
+- Open `lambda_function.py` file inside the `lambda_function` directory in your preferred text editor 
+- Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
+````python
+config = { 
+         'host': '<REST API Endpoint of Thing>',
+         'rootCAName': '<Root certificate file name>',
+         'certificateName': '<Certificate file name>',
+         'privateKeyName' : '<Private key file name>',
+         'clientId': 'drone_alexa',
+         'port' : 8883
+}
+````
+
 ### Setting up Raspberry Pi Operating System
 We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 
 
@@ -91,7 +163,7 @@ iface default inet dhcp
 - __In case you don't see an IP address acquired for `wlan1`__, then reset the `wlan1` interface using the command
  `sudo dhclient -v wlan1`
 
-### Installing Required Packages
+### Installing Required Packages on Raspberry Pi
 SSH into Raspberry Pi and follow the steps below.
 #### Installing Python
 
@@ -101,3 +173,4 @@ SSH into Raspberry Pi and follow the steps below.
 #### Installing Other Packages
 - `pip3 install tellopy`
 - `pip3 install AWSIoTPythonSDK`
+
