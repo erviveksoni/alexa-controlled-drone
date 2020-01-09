@@ -211,7 +211,7 @@ There are multiple ways to test your skill. The easiest one is by using the Alex
 - Press the microphone button an speak _`Alexa, open drone pilot`_
 - You should receive a voice feedback as _`To start, you should say: Alexa, ask drone pilot to take off.`_
 - You can try other commands e.g. _`Alexa, ask drone pilot to take off`_ and alexa should respond back with the command acknowledgement
-<img src="/images/skill_card_image.png" alt="Alexa Skill Card" border="10" />
+<img src="/images/skill_card_image.png" alt="Alexa Skill Card" width="400" height="274" border="10" />
 <br/>
 
 You can also [Test your Alexa Skill on a Alexa Device with Your Developer Account](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html#h2_register). 
