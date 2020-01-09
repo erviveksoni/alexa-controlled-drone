@@ -15,14 +15,13 @@ awsclient = None
 ##############################
 
 config = { 
-         'host': '<REST API Endpoint of Thing>',
+         'host': '<REST API Endpoint>',
          'rootCAName': '<Root certificate file name>',
          'certificateName': '<Certificate file name>',
          'privateKeyName' : '<Private key file name>',
          'clientId': 'drone_alexa',
          'port' : 8883
 }
-
 
 ##############################
 # Program Entry

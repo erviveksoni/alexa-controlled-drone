@@ -60,7 +60,48 @@ Let's start by setting up a device in AWS IoT to enable us communication with Ra
 - Click `Create` in the top right corner of the screen
 - In the create policy screen, click `Advanced mode`
 - Provide a policy name e.g. AlexaPolicy
-- Copy the contents of the `aws-iot-policy.txt` file from the cloned repository code 
+- Replace the `ACCOUNT_NUMBER` with your AWS [Account Id](https://console.aws.amazon.com/billing/home?#/account) in the next below
+````json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Publish",
+        "iot:Receive"
+      ],
+      "Resource": [
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/takeoff",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/land",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/direction",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/rotate",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Subscribe"
+      ],
+      "Resource": [
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/takeoff",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/land",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/direction",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/rotate",
+        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "iot:Connect"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+````
 - Paste the policy text into the text box and click `Create`
 
 #### Creating a Thing
@@ -71,6 +112,7 @@ Let's start by setting up a device in AWS IoT to enable us communication with Ra
 - Click `Next`
 - Click `Create certificate` in front of One-click certificate creation (recommended)
 - Download all the 3 certificate files for your thing (public, private and certificate) and save them into `certs` folder
+- Click `Active` button to activate the root CA for AWS IoT
 - Download the root CA certificate for AWS IoT from [here](https://docs.aws.amazon.com/iot/latest/developerguide/server-authentication.html#server-authentication-certs) and save it into `certs` folder
 - Click `Attach a policy` button and select the policy `AlexaPolicy` you created in the above section
 - Click `Register thing` to finish Thing creation
@@ -112,7 +154,7 @@ Every message passed to the Lambda function represents a type of action the user
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
 ````python
 config = { 
-         'host': '<REST API Endpoint of Thing>',
+         'host': '<REST API Endpoint>',
          'rootCAName': '<Root certificate file name>',
          'certificateName': '<Certificate file name>',
          'privateKeyName' : '<Private key file name>',
