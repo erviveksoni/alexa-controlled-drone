@@ -178,10 +178,53 @@ config = {
 
 You should now be able to see your code in the online code editor interface of AWS Lambda.
 
+### Creating Alexa Skill
+Now we are all set to create an Alexa skill which will interact with user to receive commands and fly the drone.
+
+- Sign into [Alexa Skills Kit Developer Console](https://developer.amazon.com/alexa/console/ask) with your credential created in prerequisite section
+- Click `Create Skill` button
+- Give your skill a name e.g. `Tello Voice Control`
+- Select a default language. Your skill will only appear if the user has this language selected
+- Select the model as `Custom` and hosting method as `Provision your own`
+- Click `Create skill` button on top right of the screen
+- Select the skill template as `Start from scratch` and then click `Choose`
+- Click `Invocation` from the left hand navigation
+- Specify a Skill Invocation Name e.g. `drone pilot`
+- Click `Save Model` button at the top of the page
+- Click `JSON Editor` on the left hand navigation
+- Copy and paste the contents of the `skill.json` file you downloaded as part of this repository into the editor surface
+- Click `Save Model` button at the top of the page
+- Feel free to go through the list of intents from the left hand navigation. Every intent represents a command the user can invoke
+- Click `Endpoint` from the left hand navigation
+- Select `AWS Lambda ARN`
+- In the Default Region textbox paste the `ARN` of the Lambda function you noted in the previous section
+- Click `Save Endpoints` button at the top of the page
+- Click `Invocation` from the left hand navigation
+- Click `Build Model` button at the top of the page and wait for the skill build process to complete
+
+#### Test Alexa Skill
+Now is the time to test the skill!!! 
+
+There are multiple ways to test your skill. The easiest one is by using the Alexa simulator provided in the  Alexa Skills Developer Console
+- On the top navigation bar, click `Test`
+- Select `Skill testing is enabled in:` as `Development`
+- Press the microphone button an speak _`Alexa, open drone pilot`_
+- You should receive a voice feedback as _`To start, you should say: Alexa, ask drone pilot to take off.`_
+- You can try other commands e.g. _`Alexa, ask drone pilot to take off`_ and alexa should respond back with the command acknowledgement
+<img src="/images/skill_card_image.png" alt="Alexa Skill Card" border="10" />
+<br/>
+
+You can also [Test your Alexa Skill on a Alexa Device with Your Developer Account](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html#h2_register). 
+You can also add and test your skill to the companion app on the Android and iOS smartphones.
+
+Congratulations!! You have successfully created an alexa skill to fly your drone!!
+
+Now the last step is to make our Raspberry Pi talk to AWS IoT thing and receive commands.
+
 ### Setting up Raspberry Pi Operating System
 We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 
 
-At this point in time, we should be able to SSH into out Pi using the Wifi onboard. Also the Pi will be most likey have access to the internet (dependeing on your WIFI network settings).
+At this point in time, we should be able to SSH into out Pi using the Wifi onboard. Also the Pi will be most likely have access to the internet (dependeing on your WIFI network settings).
 
 ### Connecting Raspberry Pi to Tello
 
