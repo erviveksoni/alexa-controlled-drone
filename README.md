@@ -88,7 +88,7 @@ The message passed by the Alexa invocation to the Lambda function will be valida
 
 Every message passed to the Lambda function represents a type of action the user wants to execute. Further every action has a designated MQTT topic defined in the policy attached to the Thing.
 
-#### Creating Lambda Function and Add Alexa Skill Trigger
+#### Creating Lambda Function
 - In the AWS developer console, search for `lambda`
 - Click `Lambda` in the results to navigate to the Lambda console
 - Click `Create function` in the top right corner of the screen
@@ -99,11 +99,16 @@ Every message passed to the Lambda function represents a type of action the user
 - In the Trigger configuration page, select `Alexa Skill Kit`
 - Select `disable` option for the Skill ID verification
 - Click `Add` to complete adding an alexa trigger
+- On the Designer section, click the lamda function icon
+- Go to `Basic settings` section of the page
+- On a safer side, set memory as `256 MB` and Timeout as `10 seconds`
+- Click `Save` button on the top right corner to save changes
+- Make a note of the lambda function `ARN` from the top right corner of the screen
 
-
-#### Creating Lambda Function and Add Alexa Skill Trigger
+#### Packaging Lambda Function Code
 - Copy the `certs` folder in the root of the `alexa-controlled-drone` directory to the `lambda_function` subdirectory
-- Open `lambda_function.py` file inside the `lambda_function` directory in your preferred text editor 
+- `cd` into the `lambda_function` sub directory
+- Open `lambda_function.py` file in your preferred text editor 
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
 ````python
 config = { 
@@ -115,6 +120,21 @@ config = {
          'port' : 8883
 }
 ````
+- Save changes and close the file
+- Open command line and type
+`pip3 install AWSIoTPythonSDK -t .` to download AWSIoTPythonSDK inside the `lambda_function` directory
+- Create a zip package with only the **contents** of the `lambda_function` directory
+
+    `zip -9r lambda.zip AWSIoTPythonSDK* certs/* iot_send_client.py lambda_function.py alexa_response_builder.py`
+- At this point you should have a zip file `lambda.zip` ready to be uploaded to AWS Lambda function
+
+#### Upload Lambda Function Package
+- Back on the Lambda function console, from the Designer section, click the lamda function icon
+- Expand the `Code entry type` dropdown and select `Upload a .zip file`
+- Click `Upload` button and browse and select the `lambda.zip` file
+- Click `Save` button on the top right corner to save changes
+
+You should now be able to see your code in the online code editor interface of AWS Lambda.
 
 ### Setting up Raspberry Pi Operating System
 We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 

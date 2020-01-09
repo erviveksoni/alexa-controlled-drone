@@ -15,10 +15,10 @@ awsclient = None
 ##############################
 
 config = { 
-         'host': 'a1g1yvj52z2sc3-ats.iot.us-east-2.amazonaws.com',
-         'rootCAName': 'root-CA.crt',
-         'certificateName': 'drone1.cert.pem',
-         'privateKeyName' : 'drone1.private.key',
+         'host': '<REST API Endpoint of Thing>',
+         'rootCAName': '<Root certificate file name>',
+         'certificateName': '<Certificate file name>',
+         'privateKeyName' : '<Private key file name>',
          'clientId': 'drone_alexa',
          'port' : 8883
 }
