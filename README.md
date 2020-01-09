@@ -215,11 +215,11 @@ There are multiple ways to test your skill. The easiest one is by using the Alex
 <br/>
 
 You can also [Test your Alexa Skill on a Alexa Device with Your Developer Account](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html#h2_register). 
-You can also add and test your skill to the companion app on the Android and iOS smartphones.
+Or you add and test your skill to the companion app on Android and iOS smartphones.
 
 Congratulations!! You have successfully created an alexa skill to fly your drone!!
 
-Now the last step is to make our Raspberry Pi talk to AWS IoT thing and receive commands.
+Now the last step is to setup Raspberry Pi and make it to talk to AWS IoT thing to receive commands.
 
 ### Setting up Raspberry Pi Operating System
 We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 
