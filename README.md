@@ -312,9 +312,9 @@ Now its time to run the application!
 - Now open your Alexa app or Alexa device with your skill enabled on it
 - Say a commands
 
-### Available Commands
+### Available Alexa Commands
 _Alexa, ask drone pilot to take off_ <br/>
 _Alexa, ask drone pilot to land_<br/>
-_Alexa, ask drone pilot to go left_. Other possible values (`up/down/back/forward/left/right`)<br/>
-_Alexa, ask drone pilot to rotate left_. Other possible values (`left/right`)<br/>
+_Alexa, ask drone pilot to go left_ Other possible values (`up/down/back/forward/left/right`)<br/>
+_Alexa, ask drone pilot to rotate left_ Other possible values (`left/right`)<br/>
 _Alexa, ask drone pilot to flip_<br/>
