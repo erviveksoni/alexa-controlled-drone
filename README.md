@@ -203,7 +203,7 @@ Now we are all set to create an Alexa skill which will interact with user to rec
 - Click `Build Model` button at the top of the page and wait for the skill build process to complete
 
 #### Test Alexa Skill
-Now is the time to test the skill!!! 
+Now is the time to put your skill to test!!! 
 
 There are multiple ways to test your skill. The easiest one is by using the Alexa simulator provided in the  Alexa Skills Developer Console
 - On the top navigation bar, click `Test`
@@ -221,12 +221,14 @@ Congratulations!! You have successfully created an alexa skill to fly your drone
 
 Now the last step is to setup Raspberry Pi and make it to talk to AWS IoT thing to receive commands.
 
-### Setting up Raspberry Pi Operating System
+### Setting up Raspberry Pi
+
+#### Setting up Raspbian Buster Lite
 We will setup Raspberry Pi in headless mode to get the optimal usage of RAM and CPU. There are many good posts on how to setup Raspbian Buster Lite on the Raspberry Pi Zero in [Headless Mode](https://desertbot.io/blog/setup-pi-zero-w-headless-wifi/) 
 
 At this point in time, we should be able to SSH into out Pi using the Wifi onboard. Also the Pi will be most likely have access to the internet (dependeing on your WIFI network settings).
 
-### Connecting Raspberry Pi to Tello
+#### Connecting Raspberry Pi to Tello
 
 When you turn on Tello, it configures itself as an AP allowing the clients to connect and control to it. Once a client is connected to Tello, it looses internet connectivity. 
 To avoid this we'll configure the Raspberry Pi with dual WIFI interfaces. 
@@ -268,14 +270,33 @@ iface default inet dhcp
 - __In case you don't see an IP address acquired for `wlan1`__, then reset the `wlan1` interface using the command
  `sudo dhclient -v wlan1`
 
-### Installing Required Packages on Raspberry Pi
+#### Installing Required Packages on Raspberry Pi
 SSH into Raspberry Pi and follow the steps below.
-#### Installing Python
+##### Installing Python
 
 - `sudo apt-get install python3-dev`
 - `sudo apt install python3-pip`
 
-#### Installing Other Packages
+##### Installing Other Packages
 - `pip3 install tellopy`
 - `pip3 install AWSIoTPythonSDK`
 
+### Setting up the Source Code
+- SSH into your Pi
+- Clone this Repository  
+  `git clone https://github.com/erviveksoni/alexa-controlled-drone`
+- `cd` into the `alexa-controlled-drone/pi-alexa-code` directory
+- Copy the [certs folder](#software) you created in the [Software](#software) section from your development machine into `pi-alexa-code`
+- Open `start.py` file in your preferred text editor 
+- Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
+````python
+config = { 
+         'host': '<REST API Endpoint>',
+         'rootCAName': '<Root certificate file name>',
+         'certificateName': '<Certificate file name>',
+         'privateKeyName' : '<Private key file name>',
+         'clientId': 'drone_alexa',
+         'port' : 8883
+}
+````
+- Save changes and close the file
