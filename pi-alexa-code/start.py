@@ -25,7 +25,7 @@ config = {
          'rootCAName': '<Root certificate file name>',
          'certificateName': '<Certificate file name>',
          'privateKeyName' : '<Private key file name>',
-         'clientId': 'drone_alexa',
+         'clientId': 'drone_alexa_client',
          'port' : 8883
 }
 

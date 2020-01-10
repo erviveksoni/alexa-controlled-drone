@@ -282,11 +282,10 @@ SSH into Raspberry Pi and follow the steps below.
 - `pip3 install AWSIoTPythonSDK`
 
 ### Setting up the Source Code
-- SSH into your Pi
-- Clone this Repository  
+- Clone this Repository on Raspberry Pi
   `git clone https://github.com/erviveksoni/alexa-controlled-drone`
 - `cd` into the `alexa-controlled-drone/pi-alexa-code` directory
-- Copy the [certs folder](#software) you created in the [Software](#software) section from your development machine into `pi-alexa-code`
+- Copy the [certs folder](#software) which has all the certificates from your development machine into `pi-alexa-code`
 - Open `start.py` file in your preferred text editor 
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
 ````python
@@ -295,8 +294,27 @@ config = {
          'rootCAName': '<Root certificate file name>',
          'certificateName': '<Certificate file name>',
          'privateKeyName' : '<Private key file name>',
-         'clientId': 'drone_alexa',
+         'clientId': 'drone_alexa_client',
          'port' : 8883
 }
 ````
 - Save changes and close the file
+
+## Running the Application
+
+Now its time to run the application!
+
+- SSH into Raspberry Pi
+- __Ensure that the drone is powered on and your Raspberry Pi is connected to it's WIFI network using the secondary WLAN interface. Check the [above](#Connecting Raspberry Pi to Tello) section to verify and troubleshoot.__
+- `cd` into the `alexa-controlled-drone/pi-alexa-code` directory
+- Type `python3 start.py`
+- You should see the drone telemetry getting displayed on the console
+- Now open your Alexa app or Alexa device with your skill enabled on it
+- Say a commands
+
+### Available Commands
+_Alexa, ask drone pilot to take off_ <br/>
+_Alexa, ask drone pilot to land_<br/>
+_Alexa, ask drone pilot to go left_. Other possible values (`up/down/back/forward/left/right`)<br/>
+_Alexa, ask drone pilot to rotate left_. Other possible values (`left/right`)<br/>
+_Alexa, ask drone pilot to flip_<br/>
