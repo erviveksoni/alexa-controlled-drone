@@ -310,11 +310,11 @@ Now its time to run the application!
 - Type `python3 start.py`
 - You should see the drone telemetry getting displayed on the console
 - Now open your Alexa app or Alexa device with your skill enabled on it
-- Say a commands
+- Say a command from the list below..
 
 ### Available Alexa Commands
 **_Alexa, ask drone pilot to take off_** <br/>
-**_Alexa, ask drone pilot to land_**<br/>
 **_Alexa, ask drone pilot to go left_** Other possible values (`up/down/back/forward/left/right`)<br/>
 **_Alexa, ask drone pilot to rotate left_** Other possible values (`left/right`)<br/>
 **_Alexa, ask drone pilot to flip_**<br/>
+**_Alexa, ask drone pilot to land_**<br/>
