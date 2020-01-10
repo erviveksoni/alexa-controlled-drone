@@ -8,7 +8,7 @@ In case you missed my first project on controlling DJI Tello with Xbox Controlle
 
 Here is a [short video](https://www.youtube.com/watch?v=rT4CF4Krcc8) where I am flying the drone using Alexa voice commands:
 
-<img src="/images/alexa_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
+<img src="/images/alexa_drone_logo1.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
 <br/><br/>
 
 At high level, following are the sequence of events which take place during this interaction:
