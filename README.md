@@ -215,8 +215,16 @@ There are multiple ways to test your skill. The easiest one is by using the Alex
 <img src="https://erviveksoni.github.io/alexa-controlled-drone/images/skill_card_image.png" alt="Alexa Skill Card" width="400" height="274" border="10" />
 <br/>
 
-You can also [Test your Alexa Skill on a Alexa Device with Your Developer Account](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html#h2_register). 
-Or you add and test your skill to the companion app on Android and iOS smartphones.
+#### Enabling Alexa Skill
+
+- Sign in to https://alexa.amazon.com/ with your Alexa developer account credentials
+- Navigate to `Skills` section in the left hand navigation
+- Click `Your Skills` on top left of the screen
+- Click `Dev Skills` on top navigation
+- Click your skill name e.g. `Tello Voice Control`
+- Click `ENABLE` button
+
+This will enable your skill on all devices, iOS and Android apps connected to your Alexa developer account.
 
 Congratulations!! You have successfully created an alexa skill to fly your drone!!
 
