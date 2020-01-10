@@ -8,7 +8,7 @@ In case you missed my first project on controlling DJI Tello with Xbox Controlle
 
 Here is a [short video](https://www.youtube.com/watch?v=rT4CF4Krcc8) where I am flying the drone using Alexa voice commands:
 
-<img src="/images/alexa_dji_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
+<img src="https://erviveksoni.github.io/alexa-controlled-drone/images/alexa_dji_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
 <br/><br/>
 
 At a
@@ -212,7 +212,7 @@ There are multiple ways to test your skill. The easiest one is by using the Alex
 - Press the microphone button an speak _`Alexa, open drone pilot`_
 - You should receive a voice feedback as _`To start, you should say: Alexa, ask drone pilot to take off.`_
 - You can try other commands e.g. _`Alexa, ask drone pilot to take off`_ and alexa should respond back with the command acknowledgement
-<img src="/images/skill_card_image.png" alt="Alexa Skill Card" width="400" height="274" border="10" />
+<img src="https://erviveksoni.github.io/alexa-controlled-drone/images/skill_card_image.png" alt="Alexa Skill Card" width="400" height="274" border="10" />
 <br/>
 
 You can also [Test your Alexa Skill on a Alexa Device with Your Developer Account](https://developer.amazon.com/en-US/docs/alexa/devconsole/test-your-skill.html#h2_register). 
