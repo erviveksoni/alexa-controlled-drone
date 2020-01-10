@@ -11,7 +11,7 @@ Here is a [short video](https://www.youtube.com/watch?v=rT4CF4Krcc8) where I am 
 <img src="/images/alexa_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
 <br/><br/>
 
-At high level, following are the sequence of events which take place during this interaction:
+At a high level, following are the sequence of events which take place during this interaction:
 1. User invokes the Alexa skill (in our case `drone pilot`) and issues a voice command
 2. Alexa skill validates this command with the available set of intents associated to the skill
 3. Alexa then sends the identified intent to the configured AWS Lambda function endpoint
