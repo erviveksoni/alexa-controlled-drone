@@ -286,9 +286,14 @@ SSH into Raspberry Pi and follow the steps below.
 - `sudo apt-get install python3-dev`
 - `sudo apt install python3-pip`
 
-##### Installing Other Packages
-- `pip3 install tellopy`
+##### Installing AWS IOT Package
 - `pip3 install AWSIoTPythonSDK`
+
+##### Install TelloPy package
+- `git clone https://github.com/hanyazou/TelloPy` 
+- `cd TelloPy`
+- `python3 setup.py bdist_wheel`
+- `pip3 install dist/tellopy-*.dev*.whl --upgrade`
 
 ### Setting up the Source Code
 - Clone this Repository on Raspberry Pi
@@ -322,6 +327,9 @@ Now its time to run the application!
 - Say a command from the list below..
 
 ### Available Alexa Commands
+**_Alexa, open drone pilot_** <br/>
+**_Alexa, ask drone pilot connection status_** <br/>
+**_Alexa, ask drone pilot status of battery_** <br/> Other possible values (`wifi/battery/camera`)<br/>
 **_Alexa, ask drone pilot to take off_** <br/>
 **_Alexa, ask drone pilot to go left_** Other possible values (`up/down/back/forward/left/right`)<br/>
 **_Alexa, ask drone pilot to rotate left_** Other possible values (`left/right`)<br/>
