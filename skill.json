@@ -81,6 +81,28 @@
                 {
                     "name": "AMAZON.NavigateHomeIntent",
                     "samples": []
+                },
+                {
+                    "name": "StatusIntent",
+                    "slots": [
+                        {
+                            "name": "status",
+                            "type": "status",
+                            "samples": [
+                                "{status}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "of {status}"
+                    ]
+                },
+                {
+                    "name": "ConnectionStatusIntent",
+                    "slots": [],
+                    "samples": [
+                        "connection status"
+                    ]
                 }
             ],
             "types": [
@@ -115,6 +137,26 @@
                         {
                             "name": {
                                 "value": "left"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "status",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "battery"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "wifi"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "camera"
                             }
                         }
                     ]
@@ -154,6 +196,22 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "StatusIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "status",
+                            "type": "status",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.133372304083.1055368602810"
+                            }
+                        }
+                    ]
                 }
             ],
             "delegationStrategy": "SKILL_RESPONSE"
@@ -174,6 +232,15 @@
                     {
                         "type": "PlainText",
                         "value": "Which direction?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.Slot.133372304083.1055368602810",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "of what?"
                     }
                 ]
             }

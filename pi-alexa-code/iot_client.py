@@ -11,7 +11,7 @@ class awsIoTClient():
         self.loop = True
         self.certfolder = "certs"
         # self.event_value = 0
-        self.myAWSIoTMQTTClient = AWSIoTMQTTClient(config['clientId'])
+        self.myAWSIoTMQTTClient = AWSIoTMQTTClient(config['clientId'], cleanSession=False)
         # Configure logging
         self.logger = logging.getLogger("AWSIoTPythonSDK.core")
         self.logger.setLevel(logging.ERROR)
@@ -37,13 +37,15 @@ class awsIoTClient():
         self.myAWSIoTMQTTClient.connect()
         self.logger.log(logging.DEBUG, "Connected to host...")
 
+    def publish_message(self, topic, payload):
+        # Publish to the topic 
+        self.myAWSIoTMQTTClient.publish(topic, payload, 1)
+        self.logger.log(logging.DEBUG, 'Published topic %s: %s\n' % (topic, payload))
+
     def suscribe(self, topics, callback):
         self.logger.log(logging.DEBUG, "Starting to suscribe...")
-        while self.loop:
-            for topic in topics:
-                self.myAWSIoTMQTTClient.subscribe(topic, 1, callback)
-            time.sleep(10e-3)  # 10ms
-        self.logger.log(logging.DEBUG, "Stopping to suscribe...")
+        for topic in topics:
+            self.myAWSIoTMQTTClient.subscribe(topic, 1, callback)
 
     def disconnect(self):
         self.loop = False

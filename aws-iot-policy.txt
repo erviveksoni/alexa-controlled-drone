@@ -4,15 +4,33 @@
     {
       "Effect": "Allow",
       "Action": [
-        "iot:Publish",
+        "iot:Publish"
+      ],
+      "Resource": [
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "iot:Receive"
       ],
       "Resource": [
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/takeoff",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/land",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/direction",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/rotate",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/flip"
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/flip"
       ]
     },
     {
@@ -21,11 +39,15 @@
         "iot:Subscribe"
       ],
       "Resource": [
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/takeoff",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/land",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/direction",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/rotate",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/flip"
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/get/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/get/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/update/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/update/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/flip"
       ]
     },
     {
