@@ -34,7 +34,6 @@ config = {
 thing_name = "<THING_NAME>"
 
 device_shadow_update_topic = "$aws/things/" + thing_name + "/shadow/update"
-device_shadow_get_topic = "$aws/things/" + thing_name + "/shadow/get"
 device_shadow_update_accepted_topic = "$aws/things/" + thing_name + "/shadow/update/accepted"
 device_shadow_update_rejected_topic = "$aws/things/" + thing_name + "/shadow/update/rejected"
 
@@ -101,8 +100,6 @@ def send_telemetry(raw_data, drone_connected):
 
 def drone_event_handler(event, sender, data, **args):
     global prev_flight_data, flight_data, log_data, is_drone_connected
-    global file
-    global write_header
     my_drone = sender
     if event is my_drone.EVENT_CONNECTED:
         logging.info("Connected to drone!...")
