@@ -319,7 +319,7 @@ config = {
 Now its time to run the application!
 
 - SSH into Raspberry Pi
-- __Ensure that the drone is powered on and your Raspberry Pi is connected to it's WIFI network using the secondary WLAN interface. Check the [above](#Connecting Raspberry Pi to Tello) section to verify and troubleshoot.__
+- __Ensure that the drone is powered on and your Raspberry Pi is connected to it's WIFI network using the secondary WLAN interface. Check the _Connecting Raspberry Pi to Tello_ section to verify and troubleshoot.__
 - `cd` into the `alexa-controlled-drone/pi-alexa-code` directory
 - Type `python3 start.py`
 - You should see the drone telemetry getting displayed on the console
@@ -335,3 +335,8 @@ Now its time to run the application!
 **_Alexa, ask drone pilot to rotate left._** Other possible values (`left/right`)<br/>
 **_Alexa, ask drone pilot to flip._**<br/>
 **_Alexa, ask drone pilot to land._**<br/>
+
+
+[reference]: #Connecting Raspberry Pi to Tello
+
+[op]: #
