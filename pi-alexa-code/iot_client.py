@@ -1,6 +1,4 @@
-import json
 import logging
-import time
 
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
@@ -38,12 +36,12 @@ class awsIoTClient():
         self.logger.log(logging.DEBUG, "Connected to host...")
 
     def publish_message(self, topic, payload):
-        # Publish to the topic 
+        # Publish to the topic
         self.myAWSIoTMQTTClient.publish(topic, payload, 1)
         self.logger.log(logging.DEBUG, 'Published topic %s: %s\n' % (topic, payload))
 
-    def suscribe(self, topics, callback):
-        self.logger.log(logging.DEBUG, "Starting to suscribe...")
+    def subscribe(self, topics, callback):
+        self.logger.log(logging.DEBUG, "Starting to subscribe...")
         for topic in topics:
             self.myAWSIoTMQTTClient.subscribe(topic, 1, callback)
 

@@ -2,9 +2,6 @@ import json
 import logging
 import threading
 import time
-import os
-import datetime
-
 import tellopy
 
 from iot_client import awsIoTClient
@@ -29,9 +26,9 @@ config = {
     'host': '<REST API Endpoint>',
     'rootCAName': '<Root certificate file name>',
     'certificateName': '<Certificate file name>',
-    'privateKeyName' : '<Private key file name>',
-    'clientId': 'drone_alexa',
-    'port' : 8883
+    'privateKeyName': '<Private key file name>',
+    'clientId': 'drone_alexa_client',
+    'port': 8883
 }
 
 thing_name = "<THING_NAME>"
@@ -97,15 +94,10 @@ def send_telemetry(raw_data, drone_connected):
     message_json = json.dumps(compute_telemetry(raw_data, drone_connected))
     aws_client.publish_message(device_shadow_update_topic, message_json)
 
+
 ##############################
 # Message callback
 ##############################
-
-
-file = None
-
-write_header = True
-
 
 def drone_event_handler(event, sender, data, **args):
     global prev_flight_data, flight_data, log_data, is_drone_connected
@@ -128,7 +120,8 @@ def drone_event_handler(event, sender, data, **args):
             logging.debug(data)
             log_data = str(data)
     else:
-      logging.debug('event="%s" data=%s' % (event.getname(), str(data)))
+        logging.debug('event="%s" data=%s' % (event.getname(), str(data)))
+
 
 ##############################
 # Callback
@@ -205,7 +198,7 @@ if __name__ == "__main__":
         aws_client = awsIoTClient(config)
         drone = connect_drone()
 
-        aws_client.suscribe([
+        aws_client.subscribe([
             'drone/takeoff',
             'drone/land',
             'drone/direction',
