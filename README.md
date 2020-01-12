@@ -61,23 +61,41 @@ Let's start by setting up a device in AWS IoT to enable us communication with Ra
 - Click `Create` in the top right corner of the screen
 - In the create policy screen, click `Advanced mode`
 - Provide a policy name e.g. AlexaPolicy
-- Replace the `ACCOUNT_NUMBER` with your AWS [Account Id](https://console.aws.amazon.com/billing/home?#/account) in the next below
-````json
+- In the below JSON. replace the `<REGION>` with your AWS account region, `<ACCOUNT_NUMBER>` with your AWS [Account Id](https://console.aws.amazon.com/billing/home?#/account) and `<THING_NAME>` with the name of the AWS thing you will create e.g. `Tello`
+````json5
 {
   "Version": "2012-10-17",
   "Statement": [
     {
       "Effect": "Allow",
       "Action": [
-        "iot:Publish",
+        "iot:Publish"
+      ],
+      "Resource": [
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/flip"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "iot:Receive"
       ],
       "Resource": [
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/takeoff",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/land",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/direction",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/rotate",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topic/drone/flip"
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/get/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/$aws/things/<THING_NAME>/shadow/update/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topic/drone/flip"
       ]
     },
     {
@@ -86,11 +104,15 @@ Let's start by setting up a device in AWS IoT to enable us communication with Ra
         "iot:Subscribe"
       ],
       "Resource": [
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/takeoff",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/land",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/direction",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/rotate",
-        "arn:aws:iot:us-east-2:ACCOUNT_NUMBER:topicfilter/drone/flip"
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/get/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/get/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/update/accepted",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/$aws/things/<THING_NAME>/shadow/update/rejected",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/takeoff",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/land",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/direction",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/rotate",
+        "arn:aws:iot:<REGION>:<ACCOUNT_NUMBER>:topicfilter/drone/flip"
       ]
     },
     {
@@ -109,7 +131,7 @@ Let's start by setting up a device in AWS IoT to enable us communication with Ra
 - On the left hand navigation, click to expand `Manage` and then select `Thing`
 - Click `Create` in the top right corner of the screen
 - Click `Create a single thing` button in the next screen
-- Provide a name for the things e.g.Tello
+- Provide a name for the things e.g.`Tello`. This should be the same name as used during policy creation
 - Click `Next`
 - Click `Create certificate` in front of One-click certificate creation (recommended)
 - Download all the 3 certificate files for your thing (public, private and certificate) and save them into `certs` folder
