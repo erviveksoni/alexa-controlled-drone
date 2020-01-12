@@ -19,7 +19,7 @@ At a
 4. The lambda function receives incoming command, 
     * Creates the command message and sends it to the AWS IoT device via MQTT channel
     * The lambda function also responds to the Alexa command with a success message
-6. A Raspberry Pi zero (connected to the DJI Tello via WIFI) suscribes to the AWS IoT MQTT channel for new messages
+6. A Raspberry Pi zero (connected to the DJI Tello via WIFI) subscribes to the AWS IoT MQTT channel for new messages
 7. Upon receiving a message, the the Raspberry Pi interprets the MQTT message and issues a corresponding DJI Tello specific command
 
 In case you are new to AWS and Raspberry Pi, you may feel a lot is going around to make this work but I promise it's very easy once you follow through the steps. 
@@ -327,11 +327,11 @@ Now its time to run the application!
 - Say a command from the list below..
 
 ### Available Alexa Commands
-**_Alexa, open drone pilot_** <br/>
-**_Alexa, ask drone pilot connection status_** <br/>
-**_Alexa, ask drone pilot status of battery_** <br/> Other possible values (`wifi/battery/camera`)<br/>
-**_Alexa, ask drone pilot to take off_** <br/>
-**_Alexa, ask drone pilot to go left_** Other possible values (`up/down/back/forward/left/right`)<br/>
-**_Alexa, ask drone pilot to rotate left_** Other possible values (`left/right`)<br/>
-**_Alexa, ask drone pilot to flip_**<br/>
-**_Alexa, ask drone pilot to land_**<br/>
+**_Alexa, open drone pilot._** <br/>
+**_Alexa, ask drone pilot connection status._** <br/>
+**_Alexa, ask drone pilot status of battery._** Other possible values (`wifi/battery/camera`)<br/>
+**_Alexa, ask drone pilot to take off._** <br/>
+**_Alexa, ask drone pilot to go left._** Other possible values (`up/down/back/forward/left/right`)<br/>
+**_Alexa, ask drone pilot to rotate left._** Other possible values (`left/right`)<br/>
+**_Alexa, ask drone pilot to flip._**<br/>
+**_Alexa, ask drone pilot to land._**<br/>
