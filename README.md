@@ -357,8 +357,3 @@ Now its time to run the application!
 **_Alexa, ask drone pilot to rotate left._** Other possible values (`left/right`)<br/>
 **_Alexa, ask drone pilot to flip._**<br/>
 **_Alexa, ask drone pilot to land._**<br/>
-
-
-[reference]: #Connecting Raspberry Pi to Tello
-
-[op]: #
