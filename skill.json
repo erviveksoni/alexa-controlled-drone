@@ -151,7 +151,12 @@
                         },
                         {
                             "name": {
-                                "value": "wifi"
+                                "value": "wifi",
+                                "synonyms": [
+                                    "wireless",
+                                    "wi fi",
+                                    "wi-fi"
+                                ]
                             }
                         },
                         {

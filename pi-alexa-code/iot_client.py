@@ -9,7 +9,7 @@ class awsIoTClient():
         self.loop = True
         self.certfolder = "certs"
         # self.event_value = 0
-        self.myAWSIoTMQTTClient = AWSIoTMQTTClient(config['clientId'], cleanSession=False)
+        self.myAWSIoTMQTTClient = AWSIoTMQTTClient(config['clientId'])
         # Configure logging
         self.logger = logging.getLogger("AWSIoTPythonSDK.core")
         self.logger.setLevel(logging.ERROR)

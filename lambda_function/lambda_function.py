@@ -154,7 +154,7 @@ def handle_status_intent(value):
         televalue = telemetry_data["BAT"]
         text = str(televalue) + " percent battery left!"
         return alexa_response_builder.statement(text)
-    elif value.lower() == "wifi":
+    elif value.lower() == "wi-fi" or value.lower() == "wifi" or value.lower() == "wireless":
         televalue = telemetry_data["WIFI"]
         if televalue > 70:
             text = "WIFI signal is strong"
@@ -205,6 +205,7 @@ def respond_intent(command, topic, value):
     if telemetry_data["BAT"] < 15:
         logging.info('Drone pilot battery low...')
         return alexa_response_builder.statement("Drone battery low. Cannot complete your request.")
-
-    awsclient.publish_message(topic, value)
+    message = {'value': value}
+    payload = json.dumps(message)
+    awsclient.publish_message(topic, payload)
     return alexa_response_builder.statement(command)

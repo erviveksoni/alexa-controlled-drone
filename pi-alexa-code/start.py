@@ -10,7 +10,7 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 aws_client = None
 
-speed = 100
+speed = 80
 drone = None
 prev_flight_data = None
 flight_data = None
@@ -27,7 +27,7 @@ config = {
     'rootCAName': '<Root certificate file name>',
     'certificateName': '<Certificate file name>',
     'privateKeyName': '<Private key file name>',
-    'clientId': 'drone_alexa_client',
+    'clientId': 'drone_alexa_lambda',
     'port': 8883
 }
 
@@ -83,7 +83,7 @@ def send_telemetry_loop():
     while is_drone_connected:
         try:
             send_telemetry(prev_flight_data, True)
-            time.sleep(100e-3)  # 100ms
+            time.sleep(500e-3)  # 500ms
         except Exception as e:
             logging.error("Error occurred while sending telemetry " + str(e))
     logging.info("Exiting telemetry loop " + str(is_drone_connected))
@@ -179,10 +179,11 @@ def execute_command(command_callback, stop_callback):
     while (time.time() - t_end) < 1:
         # print(time.time() - t_end)
         command_callback()
-        time.sleep(300e-3)  # 300ms
-
+        time.sleep(1)  # 500ms
+    #print("___________LOOP_DONE______________")
     if stop_callback is not None:
         stop_callback()
+        time.sleep(10e-3)  # 10ms
 
 
 ##############################
@@ -200,8 +201,8 @@ if __name__ == "__main__":
             'drone/land',
             'drone/direction',
             'drone/rotate',
-            'drone/flip',
-            device_shadow_update_rejected_topic
+            'drone/flip'
+            #device_shadow_update_rejected_topic
         ],
             message_callback)
 
@@ -217,6 +218,7 @@ if __name__ == "__main__":
         drone_telemetry_thread.start()
 
         while is_drone_connected:
+            time.sleep(100e-3)
             pass
 
         logging.warning('Sending final telemetry sent...')
