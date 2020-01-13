@@ -326,8 +326,9 @@ SSH into Raspberry Pi and follow the steps below.
 - `sudo apt-get install python3-dev`
 - `sudo apt install python3-pip`
 
-##### Installing AWS IOT Package
+##### Installing Required Packages
 - `pip3 install AWSIoTPythonSDK`
+- `pip3 install cpython`
 
 ##### Install TelloPy package
 - `git clone https://github.com/hanyazou/TelloPy` 
