@@ -10,7 +10,7 @@ In case you missed my first project on controlling DJI Tello drone with Xbox Con
 Here is a [short video](https://www.youtube.com/watch?v=rT4CF4Krcc8) where I am flying the drone using Alexa voice commands:
 
 <img src="https://erviveksoni.github.io/alexa-controlled-drone/images/alexa_dji_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
-<br/><br/>
+<br/>
 
 ## Tech Stack
 
