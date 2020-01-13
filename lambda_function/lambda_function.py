@@ -15,16 +15,15 @@ telemetry_data = None
 ##############################
 
 config = {
-    'host': 'a1g1yvj52z2sc3-ats.iot.us-east-2.amazonaws.com',
-    'rootCAName': 'root-CA.crt',
-    'certificateName': '12c5b3de6e-certificate.pem.crt',
-    'privateKeyName': '12c5b3de6e-private.pem.key',
+    'host': '<REST API Endpoint>',
+    'rootCAName': '<Root certificate file name>',
+    'certificateName': '<Certificate file name>',
+    'privateKeyName': '<Private key file name>',
     'clientId': 'drone_alexa_lambda',
     'port': 8883
 }
 
-
-thing_name = "Tello"
+thing_name = "<THING_NAME>"
 
 device_shadow_get_topic = "$aws/things/" + thing_name + "/shadow/get"
 device_shadow_get_accepted_topic = "$aws/things/" + thing_name + "/shadow/get/accepted"
