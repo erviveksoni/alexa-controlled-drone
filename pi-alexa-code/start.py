@@ -27,7 +27,7 @@ config = {
     'rootCAName': '<Root certificate file name>',
     'certificateName': '<Certificate file name>',
     'privateKeyName': '<Private key file name>',
-    'clientId': 'drone_alexa_lambda',
+    'clientId': 'drone_alexa_client',
     'port': 8883
 }
 
@@ -51,6 +51,33 @@ def connect_drone():
     my_drone.connect()
     # my_drone.wait_for_connection(60.0)
     return my_drone
+
+
+def drone_event_handler(event, sender, data, **args):
+    global prev_flight_data, flight_data, log_data, is_drone_connected
+    my_drone = sender
+    if event is my_drone.EVENT_CONNECTED:
+        logging.info("Connected to drone!...")
+        is_drone_connected = True
+    elif event is my_drone.EVENT_DISCONNECTED:
+        logging.warning("Disconnected from drone!...")
+        is_drone_connected = False
+    elif event is my_drone.EVENT_FLIGHT_DATA:
+        if prev_flight_data != str(data):
+            logging.info(data)
+            prev_flight_data = str(data)
+        flight_data = data
+    elif event is my_drone.EVENT_LOG_DATA:
+        if log_data != str(data):
+            logging.debug(data)
+            log_data = str(data)
+    else:
+        logging.debug('event="%s" data=%s' % (event.getname(), str(data)))
+
+
+##############################
+# Telemetry
+##############################
 
 
 def compute_telemetry(raw_data, drone_connected):
@@ -92,32 +119,6 @@ def send_telemetry_loop():
 def send_telemetry(raw_data, drone_connected):
     message_json = json.dumps(compute_telemetry(raw_data, drone_connected))
     aws_client.publish_message(device_shadow_update_topic, message_json)
-
-
-##############################
-# Message callback
-##############################
-
-def drone_event_handler(event, sender, data, **args):
-    global prev_flight_data, flight_data, log_data, is_drone_connected
-    my_drone = sender
-    if event is my_drone.EVENT_CONNECTED:
-        logging.info("Connected to drone!...")
-        is_drone_connected = True
-    elif event is my_drone.EVENT_DISCONNECTED:
-        logging.warning("Disconnected from drone!...")
-        is_drone_connected = False
-    elif event is my_drone.EVENT_FLIGHT_DATA:
-        if prev_flight_data != str(data):
-            logging.info(data)
-            prev_flight_data = str(data)
-        flight_data = data
-    elif event is my_drone.EVENT_LOG_DATA:
-        if log_data != str(data):
-            logging.debug(data)
-            log_data = str(data)
-    else:
-        logging.debug('event="%s" data=%s' % (event.getname(), str(data)))
 
 
 ##############################
@@ -175,12 +176,9 @@ def process_commands(jsondata, topic):
 
 # Executing the command for 1 second
 def execute_command(command_callback, stop_callback):
-    t_end = time.time()
-    while (time.time() - t_end) < 1:
-        # print(time.time() - t_end)
-        command_callback()
-        time.sleep(1)  # 500ms
-    #print("___________LOOP_DONE______________")
+    command_callback()
+    time.sleep(1)  # 500ms
+    logging.info('Executed command: ' + str(command_callback))
     if stop_callback is not None:
         stop_callback()
         time.sleep(10e-3)  # 10ms
@@ -208,18 +206,19 @@ if __name__ == "__main__":
 
         send_telemetry(initial_data, False)
         logging.info('Initial telemetry sent...')
+
         while is_drone_connected is False:
             print("Waiting for connection...", end="\r")
-            pass
-
-        drone_telemetry_thread = threading.Thread(target=send_telemetry_loop())  # Define a thread for ws_2812 leds
-        drone_telemetry_thread.setDaemon(
-            True)  # 'True' means it is a front thread,it would close when the mainloop() closes            pass
-        drone_telemetry_thread.start()
-
-        while is_drone_connected:
             time.sleep(100e-3)
             pass
+
+        drone_telemetry_thread = threading.Thread(target=send_telemetry_loop())  # Define a thread
+        drone_telemetry_thread.setDaemon(
+            True)  # 'True' means it is a front thread,it would close when the mainloop() closes
+        drone_telemetry_thread.start()
+
+        # Block the thread
+        drone_telemetry_thread.join()
 
         logging.warning('Sending final telemetry sent...')
         send_telemetry(initial_data, False)
