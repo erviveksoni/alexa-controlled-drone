@@ -188,7 +188,7 @@ Every message passed to the Lambda function represents a type of action the user
 - `cd` into the `lambda_function` sub directory
 - Open `lambda_function.py` file in your preferred text editor 
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
-Also, replace the `<THING_NAME>` with the Thing you created in [above section](###Creating a Thing).
+Also, replace the `<THING_NAME>` with the Thing you created in [above section](#creating-a-thing)
 ````python
 config = { 
          'host': '<REST API Endpoint>',
@@ -341,7 +341,7 @@ SSH into Raspberry Pi and follow the steps below.
 - Copy the [certs folder](#software) which has all the certificates from your development machine into `pi-alexa-code`
 - Open `start.py` file in your preferred text editor 
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
-Also, replace the `<THING_NAME>` with the Thing you created in [above section](#Creating a Thing).
+Also, replace the `<THING_NAME>` with the Thing you created in [above section](#creating-a-thing)
 
 ````python
 config = { 
@@ -362,7 +362,7 @@ thing_name = "<THING_NAME>"
 Now its time to run the application!
 
 - SSH into Raspberry Pi
-- __Ensure that the drone is powered on and your Raspberry Pi is connected to it's WIFI network using the secondary WLAN interface. Check the _Connecting Raspberry Pi to Tello_ section to verify and troubleshoot.__
+- __Ensure that the drone is powered on and your Raspberry Pi is connected to it's WIFI network using the secondary WLAN interface. Check the [Connecting Raspberry Pi to Tello](#connecting-raspberry-pi-to-tello) section to verify and troubleshoot.__
 - `cd` into the `alexa-controlled-drone/pi-alexa-code` directory
 - Type `python3 start.py`
 - You should see the drone telemetry getting displayed on the console
@@ -378,3 +378,6 @@ Now its time to run the application!
 **_Alexa, ask drone pilot to rotate left._** Other possible values (`left/right`)<br/>
 **_Alexa, ask drone pilot to flip._**<br/>
 **_Alexa, ask drone pilot to land._**<br/>
+
+
+[#c]: #
