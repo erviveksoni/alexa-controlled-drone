@@ -3,15 +3,15 @@
 In this project, I demonstrate developing a custom Alexa skill to fly and control a DJI Tello drone. 
 
 This project explores the key IoT platform aspects like device registry, 
-device shadows (aka device twins) provided by AWS IoT platform to enable communication between Raspberry Pi Zero, DJI Tello drone and a custom Amazon Alexa skill giving the ability to control the drone via voice commands.
+device shadows (aka device twins) provided by AWS IoT service to enable communication between Raspberry Pi Zero, DJI Tello drone and a custom Amazon Alexa skill giving the ability to control the drone via voice commands.
 
 In case you missed my first project on controlling DJI Tello drone with Xbox Controller, here is the [link to it](https://github.com/erviveksoni/raspberrypi-controlled-tello).
 
 Here is a [short video](https://www.youtube.com/watch?v=rT4CF4Krcc8) where I am flying the drone using Alexa voice commands:
 
 <img src="https://erviveksoni.github.io/alexa-controlled-drone/images/alexa_dji_drone_logo.jpg" alt="Alexa Tello" width="600" height="274" border="10" />
-<br/><br/>
-In case you are new to AWS and Raspberry Pi, you may feel a lot is going around to make this work but I promise it's easy once you follow through the steps. 
+<br/>
+If you are new to AWS and Raspberry Pi, you may feel a lot is going around to make this work but I promise it's easy once you follow through the steps. 
 
 This project will also enable you to implement other ideas on similar lines or different since the blocks/services/concepts used here are very much needed for developing any IoT application.
 
