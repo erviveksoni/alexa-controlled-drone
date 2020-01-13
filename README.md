@@ -35,7 +35,7 @@ At high level, following are the sequence of events which take place during this
    * On regular intervals, keeps on reporting the drone telemetry like speed, battery status, wifi strength to the AWS IoT device shadow
 7. Upon receiving a message, the the Raspberry Pi interprets the MQTT message and issues a corresponding DJI Tello specific command
 
-![InteractionSequence](https://erviveksoni.github.io/alexa-controlled-drone/images/InteractionSequence.png)
+![image](https://erviveksoni.github.io/alexa-controlled-drone/images/InteractionSequence.png)
 
 In case you are new to AWS and Raspberry Pi, you may feel a lot is going around to make this work but I promise it's easy once you follow through the steps. 
 
