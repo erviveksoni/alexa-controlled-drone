@@ -3,6 +3,8 @@ import logging
 import threading
 import time
 import tellopy
+import queue
+from command import command
 
 from iot_client import awsIoTClient
 
@@ -16,6 +18,7 @@ prev_flight_data = None
 flight_data = None
 log_data = None
 is_drone_connected = False
+command_queue = None
 initial_data = 'ALT:  0 | SPD:  0 | BAT: 0 | WIFI: 0 | CAM:  0 | MODE:  0'
 
 ##############################
@@ -134,91 +137,133 @@ def message_callback(client, userdata, message):
             logging.warning("Telemetry message got rejected...")
         else:
             logging.info("Topic: " + message.topic + "\nMessage: " + rawdata)
-            process_commands(jsondata, topic)
+            create_commands(jsondata, topic)
 
     except Exception as e:
         logging.error("Error occurred " + str(e))
 
 
-def process_commands(jsondata, topic):
+##################################
+# Queue Based Command processing
+##################################
+
+
+def create_commands(jsondata, topic):
+    command_delay = 1
+    stop_delay = 100e-3  # 100ms
     data = jsondata["value"]
     if topic == "drone/takeoff":
-        drone.takeoff()
+        enqueue_command(lambda: drone.takeoff(), 0)
     elif topic == "drone/land":
-        drone.land()
+        enqueue_command(lambda: drone.land(), 0)
     elif topic == "drone/direction":
         if data == "right":
-            execute_command(lambda: drone.right(speed), lambda: drone.right(0))
+            enqueue_command(lambda: drone.right(speed), command_delay)
+            enqueue_command(lambda: drone.right(0), stop_delay)
         elif data == "left":
-            execute_command(lambda: drone.left(speed), lambda: drone.left(0))
+            enqueue_command(lambda: drone.left(speed), command_delay)
+            enqueue_command(lambda: drone.left(0), stop_delay)
         elif data == "forward":
-            execute_command(lambda: drone.forward(speed), lambda: drone.forward(0))
+            enqueue_command(lambda: drone.forward(speed), command_delay)
+            enqueue_command(lambda: drone.forward(0), stop_delay)
         elif data == "back":
-            execute_command(lambda: drone.backward(speed), lambda: drone.backward(0))
+            enqueue_command(lambda: drone.backward(speed), command_delay)
+            enqueue_command(lambda: drone.backward(0), stop_delay)
         elif data == "up":
-            execute_command(lambda: drone.up(speed), lambda: drone.up(0))
+            enqueue_command(lambda: drone.up(speed), command_delay)
+            enqueue_command(lambda: drone.up(0), stop_delay)
         elif data == "down":
-            execute_command(lambda: drone.down(speed), lambda: drone.down(0))
+            enqueue_command(lambda: drone.down(speed), command_delay)
+            enqueue_command(lambda: drone.down(0), stop_delay)
         else:
             pass
     elif topic == "drone/flip":
-        drone.flip_forward()
+        enqueue_command(lambda: drone.flip_forward(), 0)
     elif topic == "drone/rotate":
         if data == "left":
-            execute_command(lambda: drone.counter_clockwise(speed), lambda: drone.counter_clockwise(0))
+            enqueue_command(lambda: drone.counter_clockwise(speed), command_delay)
+            enqueue_command(lambda: drone.counter_clockwise(0), stop_delay)
         elif data == "right":
-            execute_command(lambda: drone.clockwise(speed), lambda: drone.clockwise(0))
+            enqueue_command(lambda: drone.clockwise(speed), command_delay)
+            enqueue_command(lambda: drone.clockwise(0), stop_delay)
         else:
             pass
     else:
         pass
 
 
-# Executing the command for 1 second
-def execute_command(command_callback, stop_callback):
-    command_callback()
-    time.sleep(1)  # 500ms
-    logging.info('Executed command: ' + str(command_callback))
-    if stop_callback is not None:
-        stop_callback()
-        time.sleep(10e-3)  # 10ms
+# Enqueuing commands
+def enqueue_command(command_callback, delay):
+    command_object = command(command_callback, delay)
+    command_queue.put(command_object)
 
+
+def process_command():
+    while True:
+        try:
+            command_item = command_queue.get_nowait()
+            if command_item is None:
+                break
+            command_item.command_function()
+            time.sleep(command_item.delay)
+            command_queue.task_done()
+        except queue.Empty:  # ignore empty queue exceptions
+            pass
+        except Exception as ex:
+            logging.error(str(ex))
+    logging.info("Command loop finished")
+
+
+def create_wait_threads():
+    global command_queue
+    command_queue = queue.Queue()
+    command_processor_thread = threading.Thread(target=process_command)  # Define a thread
+    command_processor_thread.setDaemon(
+        True)  # 'True' means it is a front thread,it would close when the mainloop() closes
+    command_processor_thread.start()
+
+    drone_telemetry_thread = threading.Thread(target=send_telemetry_loop)  # Define a thread
+    drone_telemetry_thread.setDaemon(
+        True)  # 'True' means it is a front thread,it would close when the mainloop() closes
+    drone_telemetry_thread.start()
+    # Block the thread
+    drone_telemetry_thread.join()
+    # Block the queue
+    command_queue.join()
 
 ##############################
 # Entry point
 ##############################
+
 
 if __name__ == "__main__":
 
     try:
         aws_client = awsIoTClient(config)
         drone = connect_drone()
-
         aws_client.subscribe([
             'drone/takeoff',
             'drone/land',
             'drone/direction',
             'drone/rotate',
             'drone/flip'
-            #device_shadow_update_rejected_topic
+            # device_shadow_update_rejected_topic
         ],
             message_callback)
 
         send_telemetry(initial_data, False)
         logging.info('Initial telemetry sent...')
 
+        # Waiting for drone connection...
         while is_drone_connected is False:
             print("Waiting for connection...", end="\r")
             time.sleep(100e-3)
             pass
 
-        drone_telemetry_thread = threading.Thread(target=send_telemetry_loop())  # Define a thread
-        drone_telemetry_thread.setDaemon(
-            True)  # 'True' means it is a front thread,it would close when the mainloop() closes
-        drone_telemetry_thread.start()
+        create_wait_threads()
 
-        # Block the thread
-        drone_telemetry_thread.join()
+        # cancelling command loop
+        command_queue.put(None)
 
         logging.warning('Sending final telemetry sent...')
         send_telemetry(initial_data, False)
