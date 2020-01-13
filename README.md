@@ -188,7 +188,7 @@ Every message passed to the Lambda function represents a type of action the user
 - `cd` into the `lambda_function` sub directory
 - Open `lambda_function.py` file in your preferred text editor 
 - Update the config section at the top of this file with the cert names and Rest API Endpoint details you noted earlier 
-Also, replace the `<THING_NAME>` with the Thing you created in [above section](#Creating a Thing).
+Also, replace the `<THING_NAME>` with the Thing you created in [above section](###Creating a Thing).
 ````python
 config = { 
          'host': '<REST API Endpoint>',
@@ -207,7 +207,7 @@ thing_name = "<THING_NAME>"
 `pip3 install AWSIoTPythonSDK -t .` to download AWSIoTPythonSDK inside the `lambda_function` directory
 - Create a zip package with only the **contents** of the `lambda_function` directory
 
-    `zip -9r lambda.zip AWSIoTPythonSDK* certs/* iot_send_client.py lambda_function.py alexa_response_builder.py`
+    `zip -9r lambda.zip AWSIoTPythonSDK* certs/* iot_client.py lambda_function.py alexa_response_builder.py`
 - At this point you should have a zip file `lambda.zip` ready to be uploaded to AWS Lambda function
 
 #### Upload Lambda Function Package
